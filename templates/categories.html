@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}All Categories{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Catalog</p>
+            <h1>All Categories</h1>
+            <p class="lead">Group inventory records so the list stays easy to browse.</p>
+        </div>
+        <a class="button primary" href="/categories/new">Add New Category</a>
+    </section>
+
+    {% if categories %}
+    <section class="table-panel">
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.description or "No description" }}</td>
+                        <td>
+                            <div class="row-actions">
+                                <a href="/categories/{{ category.id }}">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    {% else %}
+    <section class="empty-state">No categories available.</section>
+    {% endif %}
+{% endblock %}

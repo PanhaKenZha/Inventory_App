@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Category{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Catalog</p>
+            <h1>Add New Category</h1>
+            <p class="lead">Create a category to organize inventory records.</p>
+        </div>
+    </section>
+
+    <form class="form-panel" method="POST">
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" required>
+        </div>
+        <div class="field">
+            <label for="description">Description</label>
+            <input id="description" type="text" name="description">
+        </div>
+        <div class="actions">
+            <button type="submit">Add Category</button>
+            <a class="button" href="/categories">Back to Categories</a>
+        </div>
+    </form>
+{% endblock %}

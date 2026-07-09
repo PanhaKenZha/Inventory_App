@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Category Details{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Catalog</p>
+            <h1>Category Details</h1>
+        </div>
+    </section>
+
+    <section class="card">
+        {% if category %}
+        <dl class="detail-list">
+            <div>
+                <dt>Name</dt>
+                <dd>{{ category.name }}</dd>
+            </div>
+            <div>
+                <dt>Description</dt>
+                <dd>{{ category.description or "No description" }}</dd>
+            </div>
+        </dl>
+        {% else %}
+        <p>Category not found.</p>
+        {% endif %}
+        <div class="actions">
+            <a class="button" href="/categories">Back to Categories</a>
+        </div>
+    </section>
+{% endblock %}

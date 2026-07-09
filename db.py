@@ -86,3 +86,29 @@ def create_user(name, email, phone):
                 """,
                 (name, email, phone),
             )
+
+
+def get_categories():
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM categories ORDER BY id")
+            return cursor.fetchall()
+
+
+def get_category(category_id):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM categories WHERE id = %s", (category_id,))
+            return cursor.fetchone()
+
+
+def create_category(name, description):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                INSERT INTO categories (name, description)
+                VALUES (%s, %s)
+                """,
+                (name, description),
+            )

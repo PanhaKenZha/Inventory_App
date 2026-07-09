@@ -15,7 +15,7 @@ from db import DB_NAME, get_connection
 MIGRATIONS = [
     "001_create_cars_table",
     "002_create_users_table",
-    
+    "003_create_categories_table",
 ]
 
 
@@ -50,7 +50,6 @@ def record_migration(cursor, version):
         "INSERT INTO schema_migrations (version) VALUES (%s)",
         (version,),
     )
-
 
 
 def run_migrations():

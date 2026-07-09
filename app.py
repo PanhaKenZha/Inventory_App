@@ -1,6 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-from db import create_car, create_user, get_car, get_cars, get_user, get_users, init_db
+from db import (
+    create_car,
+    create_category,
+    create_user,
+    get_car,
+    get_cars,
+    get_categories,
+    get_category,
+    get_user,
+    get_users,
+    init_db,
+)
 
 app = Flask(__name__)
 
@@ -65,6 +76,29 @@ def new_user():
 def user_detail(user_id):
     user = get_user(user_id)
     return render_template("user.html", user=user)
+
+
+@app.route("/categories")
+def list_categories():
+    categories = get_categories()
+    return render_template("categories.html", categories=categories)
+
+
+@app.route("/categories/new", methods=["GET", "POST"])
+def new_category():
+    if request.method == "POST":
+        create_category(
+            request.form["name"],
+            request.form.get("description", ""),
+        )
+        return redirect(url_for("list_categories"))
+    return render_template("category_form.html")
+
+
+@app.route("/categories/<int:category_id>")
+def category_detail(category_id):
+    category = get_category(category_id)
+    return render_template("category.html", category=category)
 
 
 if __name__ == "__main__":

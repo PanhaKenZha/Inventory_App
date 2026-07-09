@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Inventory Dashboard{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Overview</p>
+            <h1>Inventory Dashboard</h1>
+            <p class="lead">Manage cars and customers from one clean workspace.</p>
+        </div>
+    </section>
+
+    <section class="dashboard-grid">
+        <article class="card">
+            <h2>Cars</h2>
+            <p>Browse vehicles, inspect details, and add new inventory.</p>
+            <a class="button primary" href="/cars">View Cars</a>
+        </article>
+        <article class="card">
+            <h2>Users</h2>
+            <p>Review customer records and create new user profiles.</p>
+            <a class="button primary" href="/users">View Users</a>
+        </article>
+    </section>
+{% endblock %}

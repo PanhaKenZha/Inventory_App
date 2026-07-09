@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Inventory Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a class="brand" href="/">Inventory</a>
+            <div class="nav-links">
+                <a href="/cars">Cars</a>
+                <a href="/users">Users</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="page-shell">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+
+</html>

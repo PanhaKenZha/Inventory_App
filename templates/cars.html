@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}All Cars{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Inventory</p>
+            <h1>All Cars</h1>
+            <p class="lead">Track every vehicle currently in the inventory list.</p>
+        </div>
+        <a class="button primary" href="/cars/new">Add New Car</a>
+    </section>
+
+    {% if cars %}
+    <section class="table-panel">
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Year</th>
+                        <th>Color</th>
+                        <th>Price</th>
+                        <th>Sold</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for car in cars %}
+                    <tr>
+                        <td>{{ car.id }}</td>
+                        <td>{{ car.make }}</td>
+                        <td>{{ car.model }}</td>
+                        <td>{{ car.year }}</td>
+                        <td>{{ car.color }}</td>
+                        <td>${{ car.price }}</td>
+                        <td>
+                            <span class="badge {{ 'success' if car.sold else 'neutral' }}">
+                                {{ "Sold" if car.sold else "Available" }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="row-actions">
+                                <a href="/cars/{{ car.id }}">View</a>
+                                <a href="/cars/{{ car.id }}/edit">Edit</a>
+                                <a class="danger" href="/cars/{{ car.id }}/delete">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    {% else %}
+    <section class="empty-state">No cars available.</section>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Car Details{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Inventory</p>
+            <h1>Car Details</h1>
+        </div>
+    </section>
+
+    <section class="card">
+        {% if car %}
+        <dl class="detail-list">
+            <div>
+                <dt>Make</dt>
+                <dd>{{ car.make }}</dd>
+            </div>
+            <div>
+                <dt>Model</dt>
+                <dd>{{ car.model }}</dd>
+            </div>
+            <div>
+                <dt>Year</dt>
+                <dd>{{ car.year }}</dd>
+            </div>
+            <div>
+                <dt>Color</dt>
+                <dd>{{ car.color }}</dd>
+            </div>
+            <div>
+                <dt>Price</dt>
+                <dd>${{ car.price }}</dd>
+            </div>
+            <div>
+                <dt>Status</dt>
+                <dd>
+                    <span class="badge {{ 'success' if car.sold else 'neutral' }}">
+                        {{ "Sold" if car.sold else "Available" }}
+                    </span>
+                </dd>
+            </div>
+        </dl>
+        {% else %}
+        <p>Car not found.</p>
+        {% endif %}
+        <div class="actions">
+            <a class="button" href="/cars">Back to Cars</a>
+        </div>
+    </section>
+{% endblock %}

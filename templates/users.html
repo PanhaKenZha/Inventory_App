@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}All Users{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">People</p>
+            <h1>All Users</h1>
+            <p class="lead">Keep customer information easy to scan and update.</p>
+        </div>
+        <a class="button primary" href="/users/new">Add New User</a>
+    </section>
+
+    {% if users %}
+    <section class="table-panel">
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>
+                            <div class="row-actions">
+                                <a href="/users/{{ user.id }}">View</a>
+                                <a href="/users/{{ user.id }}/edit">Edit</a>
+                                <a class="danger" href="/users/{{ user.id }}/delete">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    {% else %}
+    <section class="empty-state">No users available.</section>
+    {% endif %}
+{% endblock %}

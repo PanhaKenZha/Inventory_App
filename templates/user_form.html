@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Add New User{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">People</p>
+            <h1>Add New User</h1>
+            <p class="lead">Add a customer profile with contact information.</p>
+        </div>
+    </section>
+
+    <form class="form-panel" method="POST">
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" required>
+        </div>
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" required>
+        </div>
+        <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" type="text" name="phone" required>
+        </div>
+        <div class="actions">
+            <button type="submit">Add User</button>
+            <a class="button" href="/users">Back to Users</a>
+        </div>
+    </form>
+{% endblock %}

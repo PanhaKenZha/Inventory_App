@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Car{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Cars</p>
+            <h1>Add New Car</h1>
+            <p class="lead">Create a new vehicle record for the inventory.</p>
+        </div>
+    </section>
+
+    <form class="form-panel" method="POST">
+        <div class="field">
+            <label for="make">Make</label>
+            <input id="make" type="text" name="make" required>
+        </div>
+        <div class="field">
+            <label for="model">Model</label>
+            <input id="model" type="text" name="model" required>
+        </div>
+        <div class="field">
+            <label for="year">Year</label>
+            <input id="year" type="number" name="year" required>
+        </div>
+        <div class="field">
+            <label for="color">Color</label>
+            <input id="color" type="text" name="color" required>
+        </div>
+        <div class="field">
+            <label for="price">Price</label>
+            <input id="price" type="number" name="price" required>
+        </div>
+        <div class="actions">
+            <button type="submit">Add Car</button>
+            <a class="button" href="/cars">Back to Cars</a>
+        </div>
+    </form>
+{% endblock %}

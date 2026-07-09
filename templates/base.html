@@ -11,16 +11,19 @@
 <body>
     <header class="site-header">
         <nav class="nav">
-            <a class="brand" href="/">Inventory</a>
+            <a class="brand" href="/">
+                <span class="brand-mark">IV</span>
+                <span>Inventory</span>
+            </a>
             <div class="nav-links">
                 {% if current_user_name %}
-                <a href="/cars">Cars</a>
-                <a href="/categories">Categories</a>
-                <a href="/users">Users</a>
+                <a class="{{ 'active' if request.path.startswith('/cars') else '' }}" href="/cars">Cars</a>
+                <a class="{{ 'active' if request.path.startswith('/categories') else '' }}" href="/categories">Categories</a>
+                <a class="{{ 'active' if request.path.startswith('/users') else '' }}" href="/users">Users</a>
                 <a href="/logout">Logout</a>
                 {% else %}
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
+                <a class="{{ 'active' if request.path.startswith('/login') else '' }}" href="/login">Login</a>
+                <a class="{{ 'active' if request.path.startswith('/register') else '' }}" href="/register">Register</a>
                 {% endif %}
             </div>
         </nav>

@@ -49,7 +49,19 @@ def inject_current_user():
 @app.route("/")
 @login_required
 def index():
-    return render_template("index.html")
+    cars = get_cars()
+    users = get_users()
+    categories = get_categories()
+    available_cars = sum(1 for car in cars if not car.get("sold"))
+
+    stats = {
+        "cars": len(cars),
+        "available_cars": available_cars,
+        "users": len(users),
+        "categories": len(categories),
+    }
+
+    return render_template("index.html", stats=stats)
 
 
 @app.route("/register", methods=["GET", "POST"])

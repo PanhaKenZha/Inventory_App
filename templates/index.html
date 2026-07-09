@@ -3,26 +3,48 @@
 {% block title %}Inventory Dashboard{% endblock %}
 
 {% block content %}
-    <section class="page-header">
-        <div>
+    <section class="page-header hero-panel">
+        <div class="hero-copy">
             <p class="eyebrow">Overview</p>
             <h1>Inventory Dashboard</h1>
             <p class="lead">Manage cars, categories, and customers from one clean workspace.</p>
         </div>
+        <div class="hero-metric">
+            <span class="metric-value">{{ stats.available_cars }}</span>
+            <span class="metric-label">Available cars</span>
+        </div>
+    </section>
+
+    <section class="stats-grid" aria-label="Inventory summary">
+        <article class="stat-card">
+            <span class="stat-label">Total Cars</span>
+            <strong>{{ stats.cars }}</strong>
+        </article>
+        <article class="stat-card">
+            <span class="stat-label">Customers</span>
+            <strong>{{ stats.users }}</strong>
+        </article>
+        <article class="stat-card">
+            <span class="stat-label">Categories</span>
+            <strong>{{ stats.categories }}</strong>
+        </article>
     </section>
 
     <section class="dashboard-grid">
         <article class="card">
+            <div class="card-icon">CA</div>
             <h2>Cars</h2>
             <p>Browse vehicles, inspect details, and add new inventory.</p>
             <a class="button primary" href="/cars">View Cars</a>
         </article>
         <article class="card">
+            <div class="card-icon">US</div>
             <h2>Users</h2>
             <p>Review customer records and create new user profiles.</p>
             <a class="button primary" href="/users">View Users</a>
         </article>
         <article class="card">
+            <div class="card-icon">CT</div>
             <h2>Categories</h2>
             <p>Organize inventory groups with clear category names.</p>
             <a class="button primary" href="/categories">View Categories</a>

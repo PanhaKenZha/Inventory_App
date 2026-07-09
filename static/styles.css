@@ -239,6 +239,19 @@ tbody tr:hover {
     padding: 28px;
 }
 
+.flash-panel {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 8px;
+    color: #9a3412;
+    margin-bottom: 20px;
+    padding: 14px 16px;
+}
+
+.flash-panel p {
+    margin: 0;
+}
+
 .form-panel {
     max-width: 620px;
     padding: 26px;

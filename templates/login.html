@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Account</p>
+            <h1>Login</h1>
+            <p class="lead">Sign in to manage inventory records.</p>
+        </div>
+    </section>
+
+    <form class="form-panel" method="POST">
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" required>
+        </div>
+        <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" required>
+        </div>
+        <div class="actions">
+            <button type="submit">Login</button>
+            <a class="button" href="/register">Create Account</a>
+        </div>
+    </form>
+{% endblock %}

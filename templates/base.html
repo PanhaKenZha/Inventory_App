@@ -13,14 +13,30 @@
         <nav class="nav">
             <a class="brand" href="/">Inventory</a>
             <div class="nav-links">
+                {% if current_user_name %}
                 <a href="/cars">Cars</a>
                 <a href="/categories">Categories</a>
                 <a href="/users">Users</a>
+                <a href="/logout">Logout</a>
+                {% else %}
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+                {% endif %}
             </div>
         </nav>
     </header>
 
     <main class="page-shell">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <section class="flash-panel">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </section>
+            {% endif %}
+        {% endwith %}
+
         {% block content %}{% endblock %}
     </main>
 </body>

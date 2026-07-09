@@ -1,7 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for
+import os
+from functools import wraps
+
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 
 from db import (
+    authenticate_user,
     create_car,
+    create_auth_user,
     create_category,
     create_user,
     get_car,
@@ -14,6 +19,7 @@ from db import (
 )
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-change-me")
 
 
 @app.before_request
@@ -23,18 +29,93 @@ def setup_database():
         app.config["DATABASE_READY"] = True
 
 
+def login_required(view):
+    @wraps(view)
+    def wrapped_view(*args, **kwargs):
+        if "user_id" not in session:
+            return redirect(url_for("login", next=request.path))
+        return view(*args, **kwargs)
+
+    return wrapped_view
+
+
+@app.context_processor
+def inject_current_user():
+    return {
+        "current_user_name": session.get("user_name"),
+    }
+
+
 @app.route("/")
+@login_required
 def index():
     return render_template("index.html")
 
 
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        password = request.form["password"]
+        confirm_password = request.form["confirm_password"]
+
+        if password != confirm_password:
+            flash("Passwords do not match.")
+            return render_template("register.html")
+
+        created = create_auth_user(
+            request.form["name"],
+            request.form["email"],
+            request.form["phone"],
+            password,
+        )
+
+        if not created:
+            flash("That email is already registered.")
+            return render_template("register.html")
+
+        flash("Account created. Please log in.")
+        return redirect(url_for("login"))
+
+    return render_template("register.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        user = authenticate_user(
+            request.form["email"],
+            request.form["password"],
+        )
+
+        if not user:
+            flash("Invalid email or password.")
+            return render_template("login.html")
+
+        session.clear()
+        session["user_id"] = user["id"]
+        session["user_name"] = user["name"]
+
+        next_page = request.args.get("next") or url_for("index")
+        return redirect(next_page)
+
+    return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
+
 @app.route("/cars")
+@login_required
 def list_cars():
     cars = get_cars()
     return render_template("cars.html", cars=cars)
 
 
 @app.route("/cars/new", methods=["GET", "POST"])
+@login_required
 def new_car():
     if request.method == "POST":
         create_car(
@@ -49,18 +130,21 @@ def new_car():
 
 
 @app.route("/cars/<int:car_id>")
+@login_required
 def car_detail(car_id):
     car = get_car(car_id)
     return render_template("car.html", car=car, car_id=car_id)
 
 
 @app.route("/users")
+@login_required
 def list_users():
     users = get_users()
     return render_template("users.html", users=users)
 
 
 @app.route("/users/new", methods=["GET", "POST"])
+@login_required
 def new_user():
     if request.method == "POST":
         create_user(
@@ -73,18 +157,21 @@ def new_user():
 
 
 @app.route("/users/<int:user_id>")
+@login_required
 def user_detail(user_id):
     user = get_user(user_id)
     return render_template("user.html", user=user)
 
 
 @app.route("/categories")
+@login_required
 def list_categories():
     categories = get_categories()
     return render_template("categories.html", categories=categories)
 
 
 @app.route("/categories/new", methods=["GET", "POST"])
+@login_required
 def new_category():
     if request.method == "POST":
         create_category(
@@ -96,6 +183,7 @@ def new_category():
 
 
 @app.route("/categories/<int:category_id>")
+@login_required
 def category_detail(category_id):
     category = get_category(category_id)
     return render_template("category.html", category=category)

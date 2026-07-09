@@ -1,7 +1,9 @@
 import os
 
 import pymysql
+from pymysql.err import IntegrityError
 from pymysql.cursors import DictCursor
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 DB_HOST = os.environ.get("DB_HOST", "localhost")
@@ -86,6 +88,43 @@ def create_user(name, email, phone):
                 """,
                 (name, email, phone),
             )
+
+
+def get_user_by_email(email):
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+            return cursor.fetchone()
+
+
+def create_auth_user(name, email, phone, password):
+    password_hash = generate_password_hash(password)
+
+    try:
+        with get_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """
+                    INSERT INTO users (name, email, phone, password_hash)
+                    VALUES (%s, %s, %s, %s)
+                    """,
+                    (name, email, phone, password_hash),
+                )
+        return True
+    except IntegrityError:
+        return False
+
+
+def authenticate_user(email, password):
+    user = get_user_by_email(email)
+
+    if not user or not user.get("password_hash"):
+        return None
+
+    if not check_password_hash(user["password_hash"], password):
+        return None
+
+    return user
 
 
 def get_categories():

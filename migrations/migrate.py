@@ -16,6 +16,7 @@ MIGRATIONS = [
     "001_create_cars_table",
     "002_create_users_table",
     "003_create_categories_table",
+    "004_add_password_hash_to_users",
 ]
 
 

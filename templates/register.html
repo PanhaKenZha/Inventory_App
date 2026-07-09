@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Account</p>
+            <h1>Register</h1>
+            <p class="lead">Create an account to access the inventory dashboard.</p>
+        </div>
+    </section>
+
+    <form class="form-panel" method="POST">
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" required>
+        </div>
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" required>
+        </div>
+        <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" type="text" name="phone" required>
+        </div>
+        <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" required>
+        </div>
+        <div class="field">
+            <label for="confirm_password">Confirm Password</label>
+            <input id="confirm_password" type="password" name="confirm_password" required>
+        </div>
+        <div class="actions">
+            <button type="submit">Register</button>
+            <a class="button" href="/login">Back to Login</a>
+        </div>
+    </form>
+{% endblock %}

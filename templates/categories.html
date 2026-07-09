@@ -3,45 +3,38 @@
 {% block title %}All Categories{% endblock %}
 
 {% block content %}
-    <section class="page-header">
+    <section class="page-header category-hero">
         <div>
             <p class="eyebrow">Catalog</p>
             <h1>All Categories</h1>
             <p class="lead">Group inventory records so the list stays easy to browse.</p>
         </div>
+        <div class="category-count">
+            <strong>{{ categories|length }}</strong>
+            <span>{{ "category" if categories|length == 1 else "categories" }}</span>
+        </div>
         <a class="button primary" href="/categories/new">Add New Category</a>
     </section>
 
     {% if categories %}
-    <section class="table-panel">
-        <div class="table-scroll">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for category in categories %}
-                    <tr>
-                        <td>{{ category.id }}</td>
-                        <td>{{ category.name }}</td>
-                        <td>{{ category.description or "No description" }}</td>
-                        <td>
-                            <div class="row-actions">
-                                <a href="/categories/{{ category.id }}">View</a>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+    <section class="category-grid" aria-label="Category list">
+        {% for category in categories %}
+        <article class="category-card">
+            <div class="category-card-top">
+                <span class="category-token">{{ category.name[:2]|upper }}</span>
+                <span class="category-id">#{{ category.id }}</span>
+            </div>
+            <h2>{{ category.name }}</h2>
+            <p>{{ category.description or "No description has been added yet." }}</p>
+            <a class="button" href="/categories/{{ category.id }}">View Details</a>
+        </article>
+        {% endfor %}
     </section>
     {% else %}
-    <section class="empty-state">No categories available.</section>
+    <section class="empty-state category-empty">
+        <strong>No categories available.</strong>
+        <span>Create the first category to start organizing inventory records.</span>
+        <a class="button primary" href="/categories/new">Add Category</a>
+    </section>
     {% endif %}
 {% endblock %}

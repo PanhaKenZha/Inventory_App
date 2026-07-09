@@ -6,12 +6,22 @@
     <section class="page-header">
         <div>
             <p class="eyebrow">Catalog</p>
-            <h1>Category Details</h1>
+            <h1>{{ category.name if category else "Category Details" }}</h1>
+            {% if category %}
+            <p class="lead">{{ category.description or "This category is ready for inventory records." }}</p>
+            {% endif %}
         </div>
     </section>
 
-    <section class="card">
+    <section class="card category-detail-card">
         {% if category %}
+        <div class="category-detail-heading">
+            <span class="category-token large">{{ category.name[:2]|upper }}</span>
+            <div>
+                <p class="eyebrow">Category #{{ category.id }}</p>
+                <h2>{{ category.name }}</h2>
+            </div>
+        </div>
         <dl class="detail-list">
             <div>
                 <dt>Name</dt>
@@ -27,6 +37,7 @@
         {% endif %}
         <div class="actions">
             <a class="button" href="/categories">Back to Categories</a>
+            <a class="button primary" href="/categories/new">Add Category</a>
         </div>
     </section>
 {% endblock %}
